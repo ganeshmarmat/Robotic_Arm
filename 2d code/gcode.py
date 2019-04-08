@@ -18,7 +18,11 @@ def getangle(a,b,c):
     except:
         return 0
     return 0
-
+def writez(z):
+    if(z==-1):
+        l.writetofile("C0\n")
+    else:
+        l.writetofile("C90\n")
 def G1(line):
     global x
     global y
@@ -31,6 +35,9 @@ def G1(line):
             x=float(token[1:])
         if 'Y' in token:
             y=float(token[1:])
+        if 'Z' in token:#temp for 2d code
+            z=float(token[1:])
+            writez(z)
     l.getpointonline(old_x,old_y,x,y)
         
 def G0(line):
@@ -45,7 +52,11 @@ def G0(line):
             x=float(token[1:])
         if 'Y' in token:
             y=float(token[1:])
-    l.writepoint(000,000)
+        if 'Z' in token: #temp for 2d code
+            z=float(token[1:])
+            writez(z)
+    l.writepoint(x,y)
+    
 
 def writecirclepoint(data,sx,sy):
     l.writetofile("###\n")
@@ -141,15 +152,25 @@ def Convert2dtoangle(filepath,filepath2):
     fr=open(filepath2,"w")
     for l in f:
         line=l.split()
+        x=0
+        y=0
         for token in line:
             if 'X' in token:
                 x=float(token[1:])
             if 'Y' in token:
                 y=float(token[1:])
+            if 'C' in token:#for tempray 2d code
+                z=float(token[1:])
+                fr.write("C"+str(z)+"\n")
                 
         distancexy=math.hypot(x,y)
-        
-        A1=getangle(x,distancexy,y)#below rotation angle
+        if x==0:
+            A1=90
+            distancexy=y
+        else:
+            A1=getangle(x,distancexy,y)#below rotation angle
+        if y==0:
+            distancexy=x
         A2=getangle(distancexy,firsthand,secondhand)
 
         A=A1+A2
@@ -160,6 +181,6 @@ def Convert2dtoangle(filepath,filepath2):
         print("A"+str(A)+" B"+str(B)+"\n")
 
 def main():
-    ReadGcodeFile("C:\\Users\\ganesh\\Desktop\\3dprinter\\ganeshmarmat.gcode");
-    Convert2dtoangle("C:\\Users\\ganesh\\Desktop\\3dprinter\\linegenerate.gcode","C:\\Users\\ganesh\\Desktop\\3dprinter\\angle.gcode")
+    ReadGcodeFile("C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varada.gcode");
+    Convert2dtoangle("C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadamidcore.gcode","C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadaangle.gcode")
 main()

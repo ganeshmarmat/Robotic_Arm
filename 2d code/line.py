@@ -1,13 +1,13 @@
 import math
 speed=1
-Fileobj=open("C:\\Users\\ganesh\\Desktop\\3dprinter\\linegenerate.gcode","w")
+Fileobj=open("C:\\Users\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadamidcore.gcode","w")
 def getrange(first,last,step):
     a=[]
     a.append(first);
     if(first>last):
         if(step>0):
             step=step*-1;
-        while(first>last+step):
+        while(first>last):
             first=first+step
             a.append(first)
     else:
