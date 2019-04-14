@@ -59,12 +59,11 @@ def G0(line):
     
 
 def writecirclepoint(data,sx,sy):
-    l.writetofile("###\n")
     print data
     first=data[0]
     for d in data:
         l.writepoint(sx+(d[0]-first[0]),sy+(d[1]-first[1]))
-    l.writetofile("###\n")
+    
 def G2(line):
     global x
     global y
@@ -148,6 +147,7 @@ def ReadGcodeFile(filepath):
             continue        
 
 def Convert2dtoangle(filepath,filepath2):
+    
     f=open(filepath,"r")
     fr=open(filepath2,"w")
     for l in f:
@@ -163,7 +163,11 @@ def Convert2dtoangle(filepath,filepath2):
                 z=float(token[1:])
                 fr.write("C"+str(z)+"\n")
                 
+        #print "x=",x,"y=",y
+        if(x==0 and y==0):
+            continue
         distancexy=math.hypot(x,y)
+        #print "distannce=",distancexy
         if x==0:
             A1=90
             distancexy=y
@@ -175,12 +179,13 @@ def Convert2dtoangle(filepath,filepath2):
 
         A=A1+A2
         B=getangle(firsthand,secondhand,distancexy)
+        #print "AB",A,B
 
-        fr.write("A"+str(A)+" B"+str(B)+"#x="+str(x)+" y="+str(y)+"\n")
+        fr.write("A"+str(A)+" B"+str(B)+"  #x="+str(x)+" y="+str(y)+"\n")
         
         print("A"+str(A)+" B"+str(B)+"\n")
 
 def main():
-    ReadGcodeFile("C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varada.gcode");
-    Convert2dtoangle("C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadamidcore.gcode","C:\\Users\\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadaangle.gcode")
+    ReadGcodeFile("C:\\Users\\ganesh\\Desktop\\3dprinter\\New\Robotic_Arm-master\\Files\\varada.gcode");
+    Convert2dtoangle("C:\\Users\\ganesh\\Desktop\\3dprinter\\New\\Robotic_Arm-master\\Files\\varadamidcore.gcode","C:\\Users\\ganesh\\Desktop\\3dprinter\\New\\Robotic_Arm-master\\Files\\varadaangle.gcode")
 main()

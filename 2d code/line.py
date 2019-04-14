@@ -1,6 +1,6 @@
 import math
 speed=1
-Fileobj=open("C:\\Users\\ganesh_marmat\\Desktop\\3d\\Robotic_Arm-master\\2d code\\files\\varadamidcore.gcode","w")
+Fileobj=open("C:\\Users\\ganesh\\Desktop\\3dprinter\\New\\Robotic_Arm-master\\Files\\varadamidcore.gcode","w")
 def getrange(first,last,step):
     a=[]
     a.append(first);
@@ -24,7 +24,6 @@ def writepoint(x1,y1):
 def writetofile(xst):
     Fileobj.write(xst)
 def getpointonline(x1,y1,x2,y2):
-    writetofile("#######\n")
     d=math.sqrt((x2-x1)**2+(y2-y1)**2)
     if(x2-x1)==0 and (y2-y1)==0:
         return;

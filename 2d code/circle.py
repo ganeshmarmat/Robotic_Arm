@@ -1,5 +1,5 @@
 import math
-speed=5
+speed=1
 def writepoint(x1,y1):
     print x1,y1
 
@@ -8,6 +8,7 @@ def getpointoncircle(sx,sy,ex,ey,xr,yr,direction):
     cnt=0
     cnt=currentangle(sx,sy,xr,yr)
     points=[]
+    points.append((sx,sy))
     print cnt
     csx=yr*math.sin(cnt)
     csy=xr*math.cos(cnt)
@@ -30,11 +31,13 @@ def getpointoncircle(sx,sy,ex,ey,xr,yr,direction):
         #writepoint(newx+sx,newy+sy)
         dist=math.sqrt((tempx-ex)**2+(tempy-ey)**2)
         if(dist<speed):
-            if(old<dist):
+            break
+            if(old<dist):#this will not call
                 break
         if(ori==360):
             break
         old=dist
+    points.append((ex,ey))
     return points
         
 def currentangle(startx,starty,rx,ry):
@@ -79,7 +82,7 @@ def getthita(xr,yr,speed):
         else:
             cnt=cnt+0.1
 
-    return cnt*(math.pi/180)
+    return cnt#*(math.pi/180)
     
 
 
